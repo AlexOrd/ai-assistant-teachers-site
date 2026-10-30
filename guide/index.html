@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="uk" data-theme="neon" data-accent="cyan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; font-src 'self'; frame-src 'self'">
+<title>Інструкція — ШІ-асистент викладача</title>
+<meta name="description" content="Покрокова інструкція: Telegram-бот на Google Apps Script і Gemini за 40 хвилин, без серверів і без бюджету.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230000AA'/%3E%3Crect x='2' y='2' width='12' height='12' fill='none' stroke='%2355FFFF' stroke-width='1.5'/%3E%3Crect x='5' y='6' width='6' height='2' fill='%23FFFF55'/%3E%3C/svg%3E">
+<link rel="preload" href="../kit/fonts/fira-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../kit/css/kit.css?v=6be035a610">
+<link rel="stylesheet" href="../site.css?v=6be035a610">
+</head>
+<body>
+<a class="dos-skip" href="#main">До змісту</a>
+<nav class="dos-menubar" aria-label="Меню">
+  <a class="brand" href="../"><u>Г</u>оловна</a>
+  <a href="../slides/"><u>С</u>лайди</a>
+  <a href="./" aria-current="page"><u>І</u>нструкція</a>
+  <a href="../code/"><u>К</u>од</a>
+  <span class="sp"></span>
+  <a href="https://webinars.ordynski.com/" data-track="hub">← Усі вебінари</a>
+</nav>
+
+<main id="main" class="dos-page read">
+  <header class="page-head">
+    <p class="kicker">ІНСТРУКЦІЯ · 9 КРОКІВ · ≈ 40 ХВ</p>
+    <h1>Повторіть бота самостійно</h1>
+    <p>Telegram-бот, який знає ваш курс (базу знань із Google Таблиці), пояснює код і показує розклад, — на Google Apps Script і Gemini. Без серверів, без встановлення програм і без бюджету. Кожен крок закінчується рядком «Має вийти» — так ви знатимете, що все гаразд.</p>
+  </header>
+
+  <div class="dos-split prereq">
+    <section class="dos-panel thin left-title" aria-label="Що потрібно">
+      <span class="dos-panel-title">Що потрібно</span>
+      <ul>
+        <li><b>Особистий акаунт Gmail.</b> Шкільні й коледжні акаунти Google Workspace часто мають заблоковані Apps Script або AI Studio — це найчастіша причина, чому «не працює».</li>
+        <li><b>Telegram</b> на телефоні або комп’ютері.</li>
+        <li><b>≈ 40 хвилин</b> і браузер <b>на комп’ютері</b>. Нічого встановлювати не треба. Зараз на телефоні — <a data-mc="channel" target="_blank" rel="noopener">підпишіться на канал</a>, а інструкцію відкрийте потім на комп’ютері.</li>
+        <li><b>0 ₴.</b> Безкоштовних лімітів Gemini достатньо для навчального бота.</li>
+      </ul>
+    </section>
+    <section class="dos-panel thin left-title" aria-label="Зміст">
+      <span class="dos-panel-title">Зміст</span>
+      <ol class="toc">
+        <li><a href="#s1">Бот у @BotFather</a></li>
+        <li><a href="#s2">Ключ Gemini</a></li>
+        <li><a href="#s3">Проєкт Apps Script</a></li>
+        <li><a href="#s4">Секрети</a></li>
+        <li><a href="#s5">Перший запуск</a></li>
+        <li><a href="#s6">Вебдодаток</a></li>
+        <li><a href="#s7">Під’єднати Telegram</a></li>
+        <li><a href="#s8">Характер бота</a></li>
+        <li><a href="#s9">База знань вашого курсу</a></li>
+        <li><a href="#trouble">Якщо щось не так</a></li>
+      </ol>
+    </section>
+  </div>
+
+  <section aria-labelledby="safety">
+    <h2 id="safety">Спершу — безпека даних</h2>
+    <div class="dos-callout danger"><span class="title">Що НЕ можна надсилати боту.</span>
+      Усе, що пишуть боту, обробляють сервери Telegram і Google. Безкоштовний рівень Gemini може використовувати запити для покращення продуктів Google, і їх можуть читати рецензенти. Умови Gemini API розраховані на користувачів від 18 років — враховуйте це, коли даєте бота студентам. Більшість наших учнів — неповнолітні, а їхні персональні дані захищає Закон України «Про захист персональних даних».</div>
+    <div class="dos-dodont">
+      <div class="dos-dont"><span class="h">Ні</span>
+        <ul><li>ПІБ учнів і колег</li><li>оцінки, характеристики, рейтинги з прізвищами</li><li>телефони, адреси, email</li><li>фото дітей, медичні дані</li><li>токени, ключі, паролі — у чат чи в код</li></ul></div>
+      <div class="dos-do"><span class="h">Так</span>
+        <ul><li>код і помилки без особистих даних</li><li>тема заняття, ідеї вправ</li><li>знеособлені приклади: «учень А», «група 1»</li><li>розклад групи без прізвищ студентів</li><li>ключі — лише у Властивостях скрипта</li></ul></div>
+    </div>
+    <p class="muted">Бот із цієї інструкції сам відмовляє, якщо бачить у повідомленні телефон, email чи оцінки з прізвищем, і веде журнал без імен (хеш замість id, email і номери замасковані). Перевіряйте правила свого закладу щодо Telegram на службових пристроях.</p>
+    <div class="dos-callout"><span class="title">Telegram у вашому закладі</span>
+      20.09.2024 НКЦК при РНБО обмежив Telegram на <b>службових пристроях</b> держорганів, військових і критичної інфраструктури (особистих смартфонів це не стосується). МОН рекомендувало закладам освіти обмежити Telegram для службового спілкування, і частина університетів так і зробила. На майстер-класі Telegram — для тесту й демо. <b>Перевірте правила свого закладу.</b> Архітектура переноситься: у Code.gs міняється лише «вхід/вихід» (<code>doPost</code> і <code>send_</code>), а база знань, Gemini, ліміти й фільтр даних лишаються. Альтернативи — вебсторінка на Apps Script (без сторонніх сервісів) або Google Chat у Workspace.</div>
+    <h3 id="students">Перш ніж дати бота студентам</h3>
+    <ul>
+      <li><b>Добровільно.</b> Бот — додаткова допомога, а не обов’язковий канал. Усе важливе (дедлайни, завдання) лишається в Classroom чи журналі.</li>
+      <li><b>Скажіть, куди йдуть дані.</b> Повідомлення обробляють Telegram і Google (Gemini, безкоштовний рівень): Google може використати їх для покращення сервісів, а рецензенти — прочитати. Ви бачите журнал без імен. Бот сам каже це на <code>/start</code>.</li>
+      <li><b>Якщо студенти неповнолітні</b> — повідомте батьків і погодьте використання з адміністрацією закладу. Умови Gemini API розраховані на 18+.</li>
+      <li><b>Складні ситуації — до людей.</b> На повідомлення про булінг чи важкий стан бот не консультує, а радить звернутися до куратора чи психолога і дає номери 116 111 та 112.</li>
+    </ul>
+    <div class="dos-callout"><span class="title">Шаблон повідомлення студентам (і батькам)</span>
+      «У нашому курсі є ШІ-помічник у Telegram: @назва_бота. Він відповідає на питання про курс (дедлайни, розклад, вимоги) і пояснює код. Користуватися ним — за бажанням. Повідомлення обробляють сервери Telegram і Google, тому не пишіть боту нічого особистого: ПІБ, оцінки, телефони, фото. Я бачу лише знеособлений журнал питань. Бот може помилятися — важливе уточнюйте в мене.»</div>
+  </section>
+
+  <!-- ================= STEPS ================= -->
+  <section class="dos-step" id="s1" data-step="1">
+    <header><span class="n">КРОК 1/9</span><h2>Створіть бота в @BotFather</h2><span class="time">≈ 5 хв</span></header>
+    <ol>
+      <li>Знайдіть у Telegram офіційний бот <b>@BotFather</b> (з синьою галочкою) і натисніть <span class="ui">Почати<span class="en">Start</span></span>.</li>
+      <li>Надішліть команду <code>/newbot</code>.</li>
+      <li>Введіть ім’я бота, яке бачитимуть люди, наприклад <b>ШІ-асистент викладача</b>.</li>
+      <li>Введіть username латиницею, що закінчується на <code>bot</code>, наприклад <code>my_teacher_helper_bot</code>.</li>
+      <li>Скопіюйте токен із відповіді BotFather — він знадобиться в кроці 4. Збережіть і посилання <code>t.me/…</code> на вашого бота.</li>
+    </ol>
+    <p class="muted">Так це виглядає (натискайте «Далі ▷»):</p>
+    <dos-terminal title="Telegram — @BotFather" prompt="Ви:" step><script type="application/json">[
+      {"cmd":"/newbot","out":["BotFather: Alright, a new bot. How are we going to call it?"]},
+      {"cmd":"ШІ-асистент викладача","out":["BotFather: Good. Now let's choose a username for your bot. It must end in `bot`."],"note":"ім'я бачать користувачі — можна українською"},
+      {"cmd":"my_teacher_helper_bot","out":["BotFather: Done! Congratulations on your new bot…","Use this token to access the HTTP API:","123456789:AAE…(ваш токен)"],"note":"username — латиницею, має закінчуватися на bot; якщо зайнятий — додайте цифри"}
+    ]</script></dos-terminal>
+    <p class="check">повідомлення від BotFather з токеном виду <code>123456789:AAE…</code>.</p>
+    <div class="dos-callout warn"><span class="title">Токен = пароль.</span>Не показуйте його на екрані, не надсилайте в чати і не вставляйте в код. Якщо він «засвітився» — у @BotFather виконайте <code>/revoke</code> і отримайте новий.</div>
+  </section>
+
+  <section class="dos-step" id="s2" data-step="2">
+    <header><span class="n">КРОК 2/9</span><h2>Отримайте ключ Gemini API</h2><span class="time">≈ 3 хв</span></header>
+    <ol>
+      <li>Відкрийте <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> під <b>особистим</b> Gmail.</li>
+      <li>Натисніть <span class="ui">Створити ключ API<span class="en">Create API key</span></span> → оберіть <span class="ui">у новому проєкті<span class="en">Create API key in new project</span></span> і скопіюйте ключ.</li>
+    </ol>
+    <p class="muted">Чому новий проєкт: він на безкоштовному рівні, без білінгу. Якщо в AI Studio червоне попередження «outstanding balance» чи «requires your attention» — не розбирайтеся з оплатою, просто створіть ключ у новому проєкті. <b>Навіщо ключ:</b> це «перепустка» вашого скрипта до моделі ШІ — тому він лише у Властивостях скрипта.</p>
+    <p class="check">рядок із приблизно 39 символів, що починається на <code>AIza</code>.</p>
+  </section>
+
+  <section class="dos-step" id="s3" data-step="3">
+    <header><span class="n">КРОК 3/9</span><h2>Створіть проєкт Apps Script</h2><span class="time">≈ 3 хв</span></header>
+    <ol>
+      <li>Відкрийте <a href="https://script.google.com/home" target="_blank" rel="noopener">script.google.com</a> → <span class="ui">Новий проєкт<span class="en">New project</span></span>.</li>
+      <li>Клацніть на назву «Проєкт без назви» вгорі й назвіть, наприклад, <b>ШІ-асистент</b>.</li>
+      <li>Видаліть усе з файлу <code>Code.gs</code> і вставте код із <a href="../code/">сторінки «Код»</a> (кнопка «Копіювати»).</li>
+      <li>Збережіть: <kbd>Ctrl+S</kbd> (на Mac — <kbd>⌘+S</kbd>).</li>
+    </ol>
+    <p class="check">файл <code>Code.gs</code> збережено без червоних повідомлень про помилки.</p>
+  </section>
+
+  <section class="dos-step" id="s4" data-step="4">
+    <header><span class="n">КРОК 4/9</span><h2>Додайте секрети у Властивості скрипта</h2><span class="time">≈ 3 хв</span></header>
+    <p>Ключі зберігаємо <b>поза кодом</b>: так код можна показати студентам або викласти на GitHub, і ніхто не отримає доступ до вашого бота.</p>
+    <ol>
+      <li>Ліворуч — ⚙ <span class="ui">Налаштування проєкту<span class="en">Project Settings</span></span>.</li>
+      <li>Унизу — <span class="ui">Властивості скрипта<span class="en">Script Properties</span></span> → <span class="ui">Додати властивість скрипта<span class="en">Add script property</span></span>.</li>
+      <li>Додайте дві властивості й натисніть <span class="ui">Зберегти<span class="en">Save</span></span>:</li>
+    </ol>
+    <div class="dos-table-wrap"><table class="dos-table">
+      <tr><th>Властивість</th><th>Значення</th></tr>
+      <tr><td><span data-copy="TELEGRAM_TOKEN">TELEGRAM_TOKEN</span></td><td>токен із кроку 1</td></tr>
+      <tr><td><span data-copy="GEMINI_API_KEY">GEMINI_API_KEY</span></td><td>ключ із кроку 2</td></tr>
+    </table></div>
+    <div class="dos-code" data-file="Code.gs — так код читає секрет"><pre><code class="language-javascript">function prop_(name) {
+  return PropertiesService
+    .getScriptProperties()   // сховище проєкту, не код
+    .getProperty(name);
+}</code></pre></div>
+    <p class="check">у налаштуваннях дві властивості: <code>TELEGRAM_TOKEN</code> і <code>GEMINI_API_KEY</code>.</p>
+  </section>
+
+  <section class="dos-step" id="s5" data-step="5">
+    <header><span class="n">КРОК 5/9</span><h2>Перший запуск: setup()</h2><span class="time">≈ 5 хв</span></header>
+    <ol>
+      <li>Поверніться до редактора <code>&lt;&gt;</code>. У списку функцій угорі оберіть <b>setup</b> і натисніть <span class="ui">▷ Виконати<span class="en">Run</span></span>.</li>
+      <li>З’явиться вікно <span class="ui">Потрібен дозвіл<span class="en">Authorization required</span></span> → <span class="ui">Переглянути дозволи<span class="en">Review permissions</span></span> → оберіть свій акаунт.</li>
+      <li>Google покаже <b>«Google не перевірив цей додаток»</b> <span class="muted">(Google hasn’t verified this app)</span>. Це нормально: це ваш власний скрипт. Натисніть <span class="ui">Додатково<span class="en">Advanced</span></span> → <span class="ui">Перейти до «ШІ-асистент» (небезпечно)<span class="en">Go to … (unsafe)</span></span> → <span class="ui">Дозволити<span class="en">Allow</span></span>.</li>
+    </ol>
+    <div class="dos-callout"><span class="title">Що створить setup():</span>секретний ключ вебхука, Таблицю <b>«ШІ-асистент — база знань і розклад»</b> (аркуші «База знань» і «Розклад» із прикладами) та журнал без імен. Обидві таблиці з’являться на вашому Google Диску — у кроці 9 ви заповните їх своїм курсом.</div>
+    <ol start="4">
+      <li>Оберіть функцію <b>testGemini</b> → <span class="ui">▷ Виконати<span class="en">Run</span></span>: у журналі з’явиться відповідь про дедлайн ЛР3. Так ви перевірите ключ Gemini й базу знань ще до Telegram.</li>
+    </ol>
+    <p class="check">у журналі виконання — рядок <code>setup() done</code>, а <b>testGemini</b> відповідає про дедлайн ЛР3.</p>
+  </section>
+
+  <section class="dos-step" id="s6" data-step="6">
+    <header><span class="n">КРОК 6/9</span><h2>Розгорніть як вебдодаток</h2><span class="time">≈ 5 хв</span></header>
+    <ol>
+      <li><span class="ui">Розгорнути<span class="en">Deploy</span></span> → <span class="ui">Нове розгортання<span class="en">New deployment</span></span>.</li>
+      <li>Біля «Виберіть тип» натисніть ⚙ → <span class="ui">Вебдодаток<span class="en">Web app</span></span>.</li>
+      <li><span class="ui">Виконувати як: Я<span class="en">Execute as: Me</span></span>; <span class="ui">Хто має доступ: Усі<span class="en">Who has access: Anyone</span></span> → <span class="ui">Розгорнути<span class="en">Deploy</span></span>.</li>
+      <li>Скопіюйте <b>URL вебдодатка</b> (закінчується на <code>/exec</code>) і додайте його у Властивості скрипта як <span data-copy="WEB_APP_URL">WEB_APP_URL</span> (так само, як у кроці 4).</li>
+    </ol>
+    <div class="dos-callout warn"><span class="title">Саме «Усі», а не «Усі з акаунтом Google».</span>Інакше Telegram отримуватиме сторінку входу замість вашого скрипта. Потрібна адреса з <code>/exec</code>, не з <code>/dev</code>. Якщо в браузері кілька акаунтів Google, відкривайте її в анонімному вікні.</div>
+    <p class="check">якщо відкрити URL у браузері, з’явиться текст <code>ШІ-асистент викладача працює ✔</code>.</p>
+  </section>
+
+  <section class="dos-step" id="s7" data-step="7">
+    <header><span class="n">КРОК 7/9</span><h2>Під’єднайте Telegram: setWebhook()</h2><span class="time">≈ 2 хв</span></header>
+    <ol>
+      <li>Оберіть функцію <b>setWebhook</b> → <span class="ui">▷ Виконати<span class="en">Run</span></span>.</li>
+      <li>Відкрийте свого бота за посиланням <code>t.me/…</code> з повідомлення BotFather і напишіть <code>/start</code>. Потім спитайте «Коли дедлайн ЛР3?» і надішліть будь-який шматок коду.</li>
+    </ol>
+    <dos-terminal title="Telegram — ваш бот" prompt="Ви:" no-autoplay><script type="application/json">[
+      {"cmd":"/start","out":["Бот: Привіт! Я ШІ-асистент викладача.","• відповісти про курс — дедлайни, оцінювання, правила;","• пояснити шматок коду — просто надішліть його;","• розклад — /rozklad або /rozklad середа."]},
+      {"cmd":"Коли дедлайн ЛР3?","out":["Бот: Лабораторну 3 «Цикли» треба здати до 13 жовтня — через Google Classroom: код і короткий звіт PDF."],"note":"відповідь узято з аркуша «База знань»"},
+      {"cmd":"/rozklad середа","out":["Бот: Розклад — середа:","  10:10  Хмарні технології — лабораторна (Лаб. 2)","  11:50  Комп’ютерні мережі — лекція (118)"]}
+    ]</script></dos-terminal>
+    <p class="check">у журналі — <code>Webhook set ✔</code>, а бот відповідає на <code>/start</code>.</p>
+  </section>
+
+  <section class="dos-step" id="s8" data-step="8">
+    <header><span class="n">КРОК 8/9</span><h2>Змініть характер бота</h2><span class="time">≈ 5 хв</span></header>
+    <p>Щоб пристосувати бота під свій предмет, достатньо змінити <b>один фрагмент</b> — системний промпт <code>SYSTEM_PROMPT</code> на початку файлу.</p>
+    <div class="dos-code" data-file="Code.gs — SYSTEM_PROMPT"><pre><code class="language-javascript">const SYSTEM_PROMPT = [
+  'Ти — доброзичливий асистент викладача інформатики…',
+  // спробуйте, наприклад:
+  // 'Ти — асистент викладача історії. Пояснюй події через',
+  // 'причини й наслідки і став одне запитання для самоперевірки.',
+].join(' ');</code></pre></div>
+    <p>Після змін: <span class="ui">Розгорнути<span class="en">Deploy</span></span> → <span class="ui">Керувати розгортаннями<span class="en">Manage deployments</span></span> → ✎ → <span class="ui">Версія: Нова версія<span class="en">Version: New version</span></span> → <span class="ui">Розгорнути<span class="en">Deploy</span></span>. Адреса вебдодатка лишиться тією самою.</p>
+    <div class="dos-callout warn"><span class="title">Не «Нове розгортання».</span>Воно створює нову адресу, і Telegram перестане бачити бота (тоді знову крок 6 і setWebhook).</div>
+    <p class="check">бот відповідає в новому стилі.</p>
+  </section>
+
+  <section class="dos-step" id="s9" data-step="9">
+    <header><span class="n">КРОК 9/9</span><h2>Наповніть базу знань свого курсу</h2><span class="time">≈ 10 хв</span></header>
+    <p>Бот відповідає про <b>ваш</b> курс за Таблицею <b>«ШІ-асистент — база знань і розклад»</b>, яку створив <b>setup()</b> на вашому Google Диску. Код і розгортання більше не чіпаєте — лише Таблицю.</p>
+    <ol>
+      <li>Відкрийте Таблицю: посилання є в журналі виконання <b>setup()</b> або знайдіть її на <a href="https://drive.google.com/" target="_blank" rel="noopener">Google Диску</a>.</li>
+      <li>Аркуш <span class="ui">База знань</span>: один рядок — одна тема. Ліворуч <b>Тема</b>, праворуч <b>Інформація</b>: дедлайни, оцінювання, перездачі, матеріали, відповіді на часті питання.</li>
+      <li>Аркуш <span class="ui">Розклад</span>: ваш розклад — бот покаже його за командою <code>/rozklad</code>. Без прізвищ колег: колонку «Примітка» можна лишити порожньою.</li>
+      <li>Зміни бот підхоплює сам приблизно за 5 хвилин.</li>
+    </ol>
+    <div class="dos-table-wrap"><table class="dos-table">
+      <tr><th>Тема</th><th>Інформація</th></tr>
+      <tr><td>Лабораторні й дедлайни</td><td>ЛР1 Змінні — до 15 вересня; ЛР2 Умови — до 29 вересня; ЛР3 Цикли — до 13 жовтня…</td></tr>
+      <tr><td>Оцінювання</td><td>Лабораторні — по 10 балів, дві модульні — по 15, іспит — 20. Запізнення — мінус 2 бали за тиждень.</td></tr>
+      <tr><td>ШІ на навчанні</td><td>Можна для пояснень і пошуку помилок. Код пишете самі й пояснюєте на захисті.</td></tr>
+    </table></div>
+    <div class="dos-callout warn"><span class="title">Лише загальні правила курсу.</span>Усе з бази знань надсилається в Gemini разом із кожним питанням. Не пишіть у Таблицю ПІБ, оцінки чи телефони студентів. Обсяг — до ~40 000 символів (приблизно 15 сторінок).</div>
+    <p class="check">на питання «Коли дедлайн ЛР3?» бот відповідає за вашою Таблицею, а після зміни рядка — через кілька хвилин уже по-новому.</p>
+  </section>
+
+  <section id="trouble" class="dos-step">
+    <h2>Якщо щось не так</h2>
+    <p>Першим ділом запустіть функцію <b>getWebhookInfo</b>: у полі <code>last_error_message</code> Telegram пише, що саме пішло не так.</p>
+    <div class="dos-table-wrap"><table class="dos-table">
+      <tr><th>Симптом</th><th>Причина</th><th>Що зробити</th></tr>
+      <tr><td>Бот мовчить</td><td>вебхук не встановлено або змінився URL</td><td>перевірте <code>WEB_APP_URL</code>, ще раз <b>setWebhook</b></td></tr>
+      <tr><td><code>401 Unauthorized</code></td><td>неправильний токен Telegram</td><td>скопіюйте токен із @BotFather у <code>TELEGRAM_TOKEN</code> без пробілів</td></tr>
+      <tr><td>«Не вдалося отримати відповідь від ШІ (код 400/403)»</td><td>неправильний ключ Gemini або AI Studio заблоковано</td><td>новий ключ в AI Studio; лише особистий Gmail</td></tr>
+      <tr><td>«…дуже багато людей одночасно» (429)</td><td>вичерпано безкоштовний ліміт</td><td>зачекайте хвилину; або властивість <code>GEMINI_MODEL</code> = <code>gemini-flash-lite-latest</code></td></tr>
+      <tr><td>У браузері сторінка входу замість «…працює ✔»</td><td>доступ не «Усі»</td><td>крок 6: «Хто має доступ: Усі»</td></tr>
+      <tr><td>У <b>getWebhookInfo</b> — «302 Moved Temporarily»</td><td>особливість Apps Script</td><td>це нормально, якщо бот відповідає</td></tr>
+      <tr><td>Зміни в коді не діють</td><td>працює стара версія</td><td>крок 8: «Керувати розгортаннями → Нова версія»</td></tr>
+      <tr><td><b>testGemini</b> думає майже хвилину</td><td>перший запуск або повільна модель</td><td>властивість <code>GEMINI_MODEL</code> = <code>gemini-flash-lite-latest</code> — відповіді за кілька секунд</td></tr>
+      <tr><td>AI Studio: «outstanding balance», ключ не працює</td><td>білінг старого проєкту</td><td>новий ключ: <i>Create API key in new project</i></td></tr>
+      <tr><td>Помилка після ▷ Виконати на <b>doPost</b></td><td>doPost запускає лише Telegram</td><td>у списку функцій оберіть потрібну: setup, setWebhook, testGemini…</td></tr>
+      <tr><td>«Не задано властивість …»</td><td>немає властивості</td><td>крок 4; назва — великими літерами, без пробілів</td></tr>
+      <tr><td>Не відкривається script.google.com чи AI Studio</td><td>обмеження шкільного акаунта</td><td>увійдіть з особистого Gmail</td></tr>
+      <tr><td>Бот «не знає» про ваш курс</td><td>аркуш перейменовано або зміни щойно внесено</td><td>назва аркуша — саме <b>База знань</b>; зачекайте 5 хвилин</td></tr>
+      <tr><td>Бот відповідає двічі</td><td>кілька старих розгортань із вебхуками</td><td><b>deleteWebhook</b>, потім <b>setWebhook</b></td></tr>
+    </table></div>
+  </section>
+
+  <section class="dos-step" aria-labelledby="cheat">
+    <h2 id="cheat">Шпаргалка</h2>
+    <div class="dos-split">
+      <div class="dos-panel thin left-title"><span class="dos-panel-title">Властивості скрипта</span>
+        <ul><li><code>TELEGRAM_TOKEN</code>, <code>GEMINI_API_KEY</code> — ви</li><li><code>WEB_APP_URL</code> — після кроку 6</li><li><code>GEMINI_MODEL</code> — необов’язково</li><li>решту (<code>DATA_SHEET_ID</code>, <code>LOG_SHEET_ID</code>, <code>WEBHOOK_KEY</code>…) створює <b>setup()</b></li></ul></div>
+    </div>
+    <h3 id="functions">Функції скрипта: що, коли і де</h3>
+    <div class="dos-table-wrap"><table class="dos-table">
+      <tr><th>Функція</th><th>Що робить</th><th>Коли</th><th>Як викликати</th></tr>
+      <tr><td><b>setup</b></td><td>створює Таблицю «база знань і розклад», журнал без імен, секретний ключ вебхука</td><td>один раз, крок 5</td><td>список функцій → <b>setup</b> → ▷ Виконати</td></tr>
+      <tr><td><b>testGemini</b></td><td>питає ШІ про дедлайн ЛР3 — без Telegram</td><td>перевірити ключ і базу знань</td><td>▷ Виконати</td></tr>
+      <tr><td><b>setWebhook</b></td><td>каже Telegram надсилати повідомлення на вашу адресу …/exec</td><td>після <b>нового</b> розгортання</td><td>▷ Виконати</td></tr>
+      <tr><td><b>getWebhookInfo</b></td><td>показує, як Telegram бачить бота, і останню помилку</td><td>бот мовчить</td><td>▷ Виконати</td></tr>
+      <tr><td><b>deleteWebhook</b></td><td>вимикає бота (Telegram перестає надсилати)</td><td>канікули, пауза</td><td>▷ Виконати</td></tr>
+      <tr><td><b>doPost</b></td><td>обробляє кожне повідомлення</td><td>автоматично</td><td>викликає Telegram — <b>не запускайте</b> вручну</td></tr>
+      <tr><td><b>doGet</b></td><td>показує «ШІ-асистент викладача працює ✔»</td><td>перевірити адресу</td><td>відкрити …/exec у браузері</td></tr>
+    </table></div>
+  </section>
+
+  <section class="dos-panel left-title" aria-label="Що далі">
+    <span class="dos-panel-title">Що далі</span>
+    <p><b>Після вебінару спілкуємося в <a data-mc="channel" target="_blank" rel="noopener">каналі майстер-класу</a>.</b> Не вийшов крок — скиньте в коментарі скрин помилки з журналу виконання (без токенів і ключів!). Запустили свого бота — поділіться, що він уміє. Інструкцію доповнюємо за вашими питаннями.</p>
+    <p><a class="dos-btn accent" data-mc="channel" target="_blank" rel="noopener">Канал</a><a class="dos-btn primary" data-mc="feedback" target="_blank" rel="noopener">Відгук за 1 хв</a><a class="dos-btn" href="https://webinars.ordynski.com/" data-track="hub">Усі вебінари</a></p>
+    <dos-socials></dos-socials>
+  </section>
+</main>
+
+<footer class="dos-footer">
+  <span>© 2026 Олександр Ординський · <a href="https://webinars.ordynski.com/" data-track="hub">Усі вебінари</a></span>
+  <span>Senior Full-Stack розробник · 10 років у розробці</span>
+</footer>
+
+<script src="../kit/series.js?v=6be035a610"></script>
+<script src="../masterclass.js?v=6be035a610"></script>
+<script src="../kit/vendor/prism/prism-core.min.js?v=6be035a610"></script>
+<script src="../kit/vendor/prism/prism-clike.min.js?v=6be035a610"></script>
+<script src="../kit/vendor/prism/prism-javascript.min.js?v=6be035a610"></script>
+<script src="../kit/js/dos-kit.js?v=6be035a610"></script>
+<script src="../guide.js?v=6be035a610"></script>
+</body>
+</html>

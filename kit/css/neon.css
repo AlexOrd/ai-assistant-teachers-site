@@ -1,0 +1,181 @@
+/* ordynski-dos-kit — "neon" theme for pages (html[data-theme="neon"]): the slides' look for the site.
+   Typography in three layers:
+     pixel  (Ordynski Terminus Prop) — headings only, at 32/48/64/96 px (multiples of 16, always crisp)
+     prose  (Fira Sans)              — everything people read: paragraphs, lists, steps
+     ui     (Fira Code)              — labels, menus, file names, buttons, code
+   Sizes grow with the screen (no zoom), so big monitors get bigger text, not blurry text.
+   Background: optional DOS starfield (js/dos-kit.js draws it; data-stars="off" disables). */
+
+[data-theme="neon"] {
+  --n-bg: #06060c; --n-panel: rgba(11, 12, 24, .82); --n-line: #262a44;
+  --n-text: #E9ECF8; --n-mute: #A8B2D6;
+  --n-cyan: #22E6FF; --n-mag: #FF3EC8; --n-lime: #A6FF3A; --n-yel: #FFE14D; --n-red: #FF4D6D;
+
+  --font-prose: "Fira Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: "Fira Code", ui-monospace, monospace;
+
+  --bg: var(--n-bg); --bg-deep: var(--n-bg); --bg-grad: none; --desktop: var(--n-bg);
+  --panel: var(--n-panel);
+  --fg: var(--n-cyan); --fg-read: var(--n-text); --fg-strong: #fff; --fg-muted: var(--n-mute);
+  --heading: var(--n-mag);
+  --accent: var(--n-cyan); --accent-dim: rgba(34, 230, 255, .5); --accent-ink: #001418;
+  --border: rgba(34, 230, 255, .6);
+  --select-bg: rgba(34, 230, 255, .16); --select-fg: #fff;
+  --bar-bg: rgba(8, 9, 18, .88); --bar-fg: var(--n-text); --bar-key-bg: transparent; --bar-key-fg: var(--n-mag);
+  --hotkey: var(--n-mag);
+  --dialog-bg: #0c0d18; --dialog-fg: var(--n-text); --danger-bg: #1c0710; --danger-fg: #fff;
+  --code-bg: #0b0c16; --code-fg: #E3E7F7; --code-comment: #7480A8;
+  --ok: var(--n-lime); --warn: var(--n-yel); --err: var(--n-red);
+  --shadow-hard: none;
+  --frame: 3px double var(--border); --frame-thin: 1px solid var(--border);
+  --glow: 0 0 18px rgba(34, 230, 255, .14);
+
+  /* fluid type: 17px on phones → 21px on big monitors */
+  --text-sm: clamp(14px, .25vw + 10px, 16px);
+  --text-md: clamp(17px, .4vw + 13px, 21px);
+  --text-lg: clamp(20px, .6vw + 14px, 26px);
+  --lh-read: 1.65;
+  --measure: 70ch;
+  --pixel-sm: 16px; --pixel-md: 32px; --pixel-lg: 64px;
+  color-scheme: dark;
+}
+@media (min-width: 1700px) { [data-theme="neon"] { --pixel-md: 48px; --pixel-lg: 96px; } }
+
+/* ---------- base ---------- */
+[data-theme="neon"] { background: var(--n-bg); }
+[data-theme="neon"] body {
+  background: transparent; font-family: var(--font-prose); font-size: var(--text-md); line-height: var(--lh-read);
+  font-feature-settings: normal; letter-spacing: .005em; -webkit-font-smoothing: antialiased;
+}
+[data-theme="neon"] .dos-page { max-width: clamp(1100px, 70vw, 1480px); padding-inline: clamp(16px, 3vw, 48px); }
+
+[data-theme="neon"] h1 { color: #fff; text-shadow: 0 0 2px #fff, 0 0 14px rgba(255, 62, 200, .85), 0 0 40px rgba(255, 62, 200, .45); letter-spacing: .01em; }
+[data-theme="neon"] h1::after { height: 4px; width: 160px; border: 0; background: var(--n-cyan); box-shadow: 0 0 12px var(--n-cyan); margin-top: 18px; }
+[data-theme="neon"] h2 { color: var(--n-mag); text-shadow: 0 0 10px rgba(255, 62, 200, .45); }
+[data-theme="neon"] h2::after { height: 3px; width: 80px; background: var(--n-cyan); box-shadow: 0 0 10px var(--n-cyan); margin-top: 12px; }
+[data-theme="neon"] h3 { color: #fff; font-size: var(--text-lg); font-family: var(--font-prose); font-weight: 600; letter-spacing: 0; }
+[data-theme="neon"] h3::before { content: "▸ "; color: var(--n-cyan); }
+
+[data-theme="neon"] p, [data-theme="neon"] li { text-wrap: pretty; }
+[data-theme="neon"] strong, [data-theme="neon"] b { font-weight: 600; color: #fff; }
+[data-theme="neon"] a { color: var(--n-cyan); text-decoration-color: rgba(34, 230, 255, .45); text-decoration-thickness: 1px; text-underline-offset: .22em; }
+[data-theme="neon"] a:hover { background: none; color: #fff; text-decoration-color: var(--n-cyan); text-shadow: 0 0 10px rgba(34, 230, 255, .6); }
+[data-theme="neon"] ul > li::before { content: "▸"; font-family: var(--font-prose); color: var(--n-cyan); left: -1.3em; }
+[data-theme="neon"] ul { padding-left: 1.6em; }
+[data-theme="neon"] ol > li::marker { font-family: var(--font-ui); color: var(--n-cyan); font-size: .9em; }
+[data-theme="neon"] :not(pre) > code { font-family: var(--font-ui); font-size: .88em; background: rgba(34, 230, 255, .1); border: 1px solid rgba(34, 230, 255, .3); border-radius: 5px; color: #D8FBFF; padding: .05em .35em; }
+[data-theme="neon"] kbd { font-family: var(--font-ui); background: transparent; color: var(--n-cyan); border: 1px solid var(--border); border-radius: 5px; padding: 0 .4em; font-size: .85em; }
+[data-theme="neon"] kbd::before, [data-theme="neon"] kbd::after { content: none; }
+[data-theme="neon"] small, [data-theme="neon"] .muted { color: var(--n-mute); }
+[data-theme="neon"] hr { border-top: 1px solid var(--n-line); }
+[data-theme="neon"] ::selection { background: rgba(255, 62, 200, .45); color: #fff; }
+
+/* ---------- menu bar ---------- */
+[data-theme="neon"] .dos-menubar {
+  font-family: var(--font-ui); font-size: var(--text-sm); padding: 10px clamp(16px, 3vw, 48px); gap: 6px 22px;
+  border-bottom: 1px solid rgba(34, 230, 255, .3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+[data-theme="neon"] .dos-menubar a { padding: 2px 4px; border-bottom: 2px solid transparent; }
+[data-theme="neon"] .dos-menubar a:hover, [data-theme="neon"] .dos-menubar a[aria-current] { background: none; color: #fff; border-bottom-color: var(--n-cyan); text-shadow: 0 0 10px rgba(34, 230, 255, .6); }
+[data-theme="neon"] .dos-menubar .brand { color: #fff; }
+
+/* ---------- panels ---------- */
+[data-theme="neon"] .dos-panel { border-radius: 12px; box-shadow: var(--glow), inset 0 0 40px rgba(34, 230, 255, .04); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); padding: calc(var(--s-4) + .2em) var(--s-4) var(--s-4); }
+[data-theme="neon"] .dos-panel > .dos-panel-title, [data-theme="neon"] .dos-panel > .dos-panel-foot {
+  background: var(--n-bg); font-family: var(--font-ui); font-weight: 500; font-size: var(--text-sm); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--n-cyan); border: 1px solid var(--border); border-radius: 6px; padding: 1px 12px;
+}
+[data-theme="neon"] .dos-panel.is-active > .dos-panel-title { background: var(--n-cyan); color: #001418; }
+[data-theme="neon"] .dos-split.joined > .dos-panel + .dos-panel { margin-left: 0; }
+[data-theme="neon"] .dos-split.joined { gap: var(--s-3); }
+
+/* ---------- file list ---------- */
+[data-theme="neon"] .dos-filelist { font-family: var(--font-ui); font-size: var(--text-sm); }
+[data-theme="neon"] .dos-filelist th { color: var(--n-mute); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; border-bottom: 1px solid var(--n-line); padding-bottom: 10px; }
+[data-theme="neon"] .dos-filelist td { padding: 9px 12px; }
+[data-theme="neon"] .dos-filelist td + td, [data-theme="neon"] .dos-filelist th + th { border-left: 1px solid var(--n-line); }
+[data-theme="neon"] .dos-filelist .label { font-family: var(--font-prose); font-size: var(--text-md); }
+[data-theme="neon"] .dos-filelist tr[aria-selected="true"] td, [data-theme="neon"] .dos-filelist tr[data-href]:hover td { background: rgba(34, 230, 255, .12); color: #fff; }
+[data-theme="neon"] .dos-filelist tr[aria-selected="true"] td:first-child { box-shadow: inset 4px 0 0 var(--n-cyan); }
+
+/* ---------- status + F-keys ---------- */
+[data-theme="neon"] .dos-status { font-family: var(--font-ui); color: var(--n-mute); font-size: var(--text-sm); padding: 10px clamp(16px, 3vw, 48px); border-top: 1px solid var(--n-line); }
+[data-theme="neon"] .dos-fkeys { font-family: var(--font-ui); font-size: var(--text-sm); background: rgba(8, 9, 18, .92); border-top: 1px solid rgba(34, 230, 255, .3); }
+[data-theme="neon"] .dos-fkeys i { color: var(--n-mag); padding: 8px 6px 8px 14px; }
+[data-theme="neon"] .dos-fkeys span { background: none; color: var(--n-text); padding: 8px 8px; }
+[data-theme="neon"] .dos-fkeys > a:hover span, [data-theme="neon"] .dos-fkeys > button:hover span { background: none; color: var(--n-cyan); text-shadow: 0 0 10px rgba(34, 230, 255, .6); }
+
+/* ---------- buttons ---------- */
+[data-theme="neon"] .dos-btn {
+  font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 500; letter-spacing: .04em;
+  background: transparent; color: var(--n-cyan); border: 1.5px solid var(--n-cyan); border-radius: 8px; padding: 8px 18px;
+  box-shadow: 0 0 12px rgba(34, 230, 255, .25);
+}
+[data-theme="neon"] .dos-btn::before, [data-theme="neon"] .dos-btn::after { content: none; }
+[data-theme="neon"] .dos-btn.primary { background: var(--n-lime); border-color: var(--n-lime); color: #0b1400; box-shadow: 0 0 16px rgba(166, 255, 58, .45); }
+[data-theme="neon"] .dos-btn.accent { background: var(--n-mag); border-color: var(--n-mag); color: #fff; box-shadow: 0 0 16px rgba(255, 62, 200, .45); }
+[data-theme="neon"] .dos-btn:hover { background: var(--n-cyan); color: #001418; border-color: var(--n-cyan); }
+[data-theme="neon"] .dos-btn:active { transform: translateY(1px); box-shadow: none; }
+[data-theme="neon"] .dos-btn.is-soon::after { content: " · скоро"; }
+
+/* ---------- callouts, do/don't, steps ---------- */
+[data-theme="neon"] .dos-callout { border: 1px solid var(--border); border-left-width: 4px; border-radius: 10px; background: rgba(34, 230, 255, .05); }
+[data-theme="neon"] .dos-callout::before { border-radius: 6px; font-family: var(--font-ui); }
+[data-theme="neon"] .dos-callout.warn { border-color: var(--n-yel); background: rgba(255, 225, 77, .06); }
+[data-theme="neon"] .dos-callout.danger { border-color: var(--n-red); background: rgba(255, 77, 109, .08); }
+[data-theme="neon"] .dos-callout .title { font-family: var(--font-prose); font-weight: 600; }
+[data-theme="neon"] .dos-do, [data-theme="neon"] .dos-dont { border-width: 1px; border-style: solid; border-radius: 10px; background: var(--n-panel); }
+[data-theme="neon"] .dos-do > .h, [data-theme="neon"] .dos-dont > .h { font-family: var(--font-ui); letter-spacing: .08em; text-transform: uppercase; font-size: var(--text-sm); }
+[data-theme="neon"] .dos-step .n { font-family: var(--font-ui); background: transparent; color: var(--n-mag); border: 1.5px solid var(--n-mag); border-radius: 8px; padding: 0 10px; box-shadow: 0 0 10px rgba(255, 62, 200, .35); font-size: var(--text-sm); }
+[data-theme="neon"] .dos-step .time { font-family: var(--font-ui); color: var(--n-mute); font-size: var(--text-sm); }
+[data-theme="neon"] .dos-step h2 { font-size: var(--pixel-md); }
+[data-theme="neon"] .dos-step .check { border-left: 3px solid var(--n-lime); border-radius: 0 8px 8px 0; background: rgba(166, 255, 58, .07); }
+[data-theme="neon"] .dos-step .check::before { font-family: var(--font-ui); font-size: .85em; letter-spacing: .04em; }
+
+/* ---------- tables ---------- */
+[data-theme="neon"] .dos-table th, [data-theme="neon"] .dos-table td { border: 0; border-bottom: 1px solid var(--n-line); padding: 10px 14px; }
+[data-theme="neon"] .dos-table th { background: transparent; color: var(--n-cyan); font-family: var(--font-ui); font-weight: 500; font-size: var(--text-sm); letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+
+/* ---------- code, terminal ---------- */
+[data-theme="neon"] .dos-code, [data-theme="neon"] .dos-term { border: 1px solid var(--n-line); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 34px rgba(0, 0, 0, .45); }
+[data-theme="neon"] .dos-code > .bar, [data-theme="neon"] .dos-term-bar { background: #141629; color: var(--n-mute); font-family: var(--font-ui); font-size: var(--text-sm); padding: 6px 8px 6px 14px; border-bottom: 1px solid var(--n-line); }
+[data-theme="neon"] .dos-code > .bar::before, [data-theme="neon"] .dos-term-bar .t::before { content: "●●● "; color: #3a3f63; letter-spacing: .1em; }
+[data-theme="neon"] .dos-code > .bar > span { flex: 1; }
+[data-theme="neon"] .dos-copy, [data-theme="neon"] .dos-term-bar button { font-family: var(--font-ui); font-size: .85em; background: transparent; color: var(--n-cyan); border: 1px solid rgba(34, 230, 255, .5); border-radius: 6px; padding: 2px 12px; }
+[data-theme="neon"] .dos-copy:hover, [data-theme="neon"] .dos-term-bar button:hover { background: var(--n-cyan); color: #001418; }
+[data-theme="neon"] .dos-copy.done { background: var(--n-lime); color: #0b1400; border-color: var(--n-lime); }
+[data-theme="neon"] .dos-code pre { font-size: .86em; line-height: 1.6; padding: 16px 20px; }
+[data-theme="neon"] .token.keyword, [data-theme="neon"] .token.boolean { color: var(--n-mag); }
+[data-theme="neon"] .token.string, [data-theme="neon"] .token.template-string { color: var(--n-lime); }
+[data-theme="neon"] .token.number { color: var(--n-yel); }
+[data-theme="neon"] .token.function { color: var(--n-cyan); }
+[data-theme="neon"] .dos-term-body { font-family: var(--font-ui); font-size: .86em; }
+
+/* ---------- interface names in instructions: <span class="ui">Кнопка<span class="en">Button</span></span> ---------- */
+[data-theme="neon"] .ui { font-family: var(--font-ui); font-size: .86em; background: rgba(255, 62, 200, .1); color: #fff; border: 1px solid rgba(255, 62, 200, .45); border-radius: 5px; padding: .05em .4em; }
+[data-theme="neon"] .ui .en { color: var(--n-mute); font-size: .9em; }
+
+/* ---------- dialogs, QR, footer ---------- */
+[data-theme="neon"] dialog.dos-dialog { border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 0 40px rgba(34, 230, 255, .25); font-family: var(--font-prose); }
+[data-theme="neon"] .dos-dialog .inner { border: 0; }
+[data-theme="neon"] .dos-dialog .inner > .t { background: var(--dialog-bg); color: var(--n-cyan); font-family: var(--font-ui); letter-spacing: .1em; text-transform: uppercase; font-size: var(--text-sm); }
+[data-theme="neon"] dialog.dos-dialog::backdrop { background: rgba(3, 3, 8, .75); }
+[data-theme="neon"] .dos-qr { border-radius: 12px; box-shadow: 0 0 0 3px var(--n-cyan), 0 0 24px rgba(34, 230, 255, .45); }
+[data-theme="neon"] .dos-qr-cap { font-family: var(--font-ui); }
+[data-theme="neon"] .dos-footer { font-family: var(--font-ui); font-size: var(--text-sm); color: var(--n-mute); }
+[data-theme="neon"] .dos-socials a { font-family: var(--font-ui); }
+
+/* ---------- starfield canvas (js/dos-kit.js) ---------- */
+.dos-stars { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: .55; }
+@media print { .dos-stars { display: none; } }
+@media (max-width: 600px) { [data-theme="neon"] .dos-panel { padding: calc(var(--s-3) + .2em) var(--s-2) var(--s-2); } }
+
+/* ---------- one reading column: text, code, terminals, callouts and checks share the same width ---------- */
+/* reading pages (<main class="dos-page read">): one column — panels, text, code, terminals all the same width */
+[data-theme="neon"] { --measure: 100%; }
+[data-theme="neon"] .dos-page.read { max-width: min(1120px, 100%); }
+[data-theme="neon"] :is(.dos-step, .page-head, .prose, main > section:not(.dos-panel)) > :is(p, ul, ol, .dos-code, dos-terminal, .dos-callout, .check, .dos-table-wrap, .dos-dodont, .dos-panel, blockquote) {
+  max-width: var(--measure); width: 100%; margin-left: 0; margin-right: 0;
+}
+[data-theme="neon"] .dos-callout { max-width: var(--measure); }
+[data-theme="neon"] .dos-table-wrap > .dos-table { width: 100%; }

@@ -1,0 +1,151 @@
+/* ordynski-dos-kit — reveal.js stage theme (Neo-Commander, SPEC §7 + consilium V1–V6).
+   Logical size 1920×1080: pixel font only at 32/48/64/96, reading text in Fira Code. */
+@layer kit.slides {
+  html, body { height: 100%; margin: 0; overflow: hidden; }
+  body { background: var(--bg-grad); background-color: var(--bg); }
+  .reveal { font-family: var(--font-read); color: var(--fg-read); font-size: 40px; font-variant-ligatures: none; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { height: 100%; padding: 64px 80px 40px; box-sizing: border-box; line-height: 1.5; }
+  .reveal .slides section.stack { padding: 0; }
+
+  /* chrome around the deck (outside the scaled slide). Hidden in present mode (consilium V6) */
+  .stage-chrome { position: fixed; left: 0; right: 0; z-index: 30; font-family: var(--font-pixel); }
+  .stage-top { top: 0; }
+  .stage-bottom { bottom: 0; }
+  .stage-chrome .dos-menubar { position: static; background: #04062A; color: #CDEFFF; font-size: clamp(14px, 1.4vw, 28px); border-bottom: 2px solid rgba(85,255,255,.25); }
+  .stage-chrome .dos-menubar a { color: inherit; }
+  .stage-chrome .dos-menubar .on { background: var(--accent); color: var(--accent-ink); }
+  .stage-chrome .dos-status { font-size: clamp(12px, 1.15vw, 24px); color: #9EE9FF; background: rgba(4,6,42,.6); }
+  .stage-chrome .dos-fkeys { font-size: clamp(13px, 1.25vw, 26px); }
+  .stage-chrome .dos-fkeys > button { min-width: 0; }
+  html.has-chrome .reveal { top: var(--chrome-top, 48px); bottom: var(--chrome-bottom, 72px); height: auto; position: absolute; left: 0; right: 0; }
+  html.dos-present .stage-chrome { display: none; }
+  html.dos-present .reveal { top: 0; bottom: 0; }
+
+  /* typography on stage */
+  .reveal h1, .reveal h2, .reveal h3 { font-family: var(--font-pixel); color: var(--heading); text-transform: none; letter-spacing: 0; margin: 0 0 40px; line-height: 1.12; text-shadow: none; }
+  .reveal h1 { font-size: 96px; }
+  .reveal h2 { font-size: 64px; }
+  .reveal h3 { font-size: 48px; color: var(--fg-strong); }
+  .reveal h1::after, .reveal h2::after { display: none; }
+  .reveal h3::before { content: "► "; color: var(--accent); }
+  .reveal p, .reveal li { font-size: 40px; line-height: 1.5; max-width: 34em; text-wrap: pretty; }
+  .reveal ul { list-style: none; padding-left: 64px; margin: 0 0 32px; }
+  .reveal ul > li { position: relative; margin-bottom: 20px; }
+  .reveal ul > li::before { content: "■"; position: absolute; left: -56px; top: 0; color: var(--accent); font-family: var(--font-pixel-mono); }
+  .reveal strong, .reveal b { color: var(--fg-strong); font-weight: 600; }
+  .reveal .muted { color: var(--fg-muted); }
+  .reveal small { font-size: 32px; color: var(--fg-muted); }
+  .reveal a { color: var(--fg-strong); }
+  .reveal .accent { color: var(--accent); }
+
+  /* panels and code on stage */
+  .reveal .dos-panel { padding: 56px 48px 40px; border-width: 6px; margin: 0; }
+  .reveal .dos-panel > .dos-panel-title { font-size: 32px; line-height: 1.5; padding: 0 20px; }
+  .reveal .dos-split { gap: 48px; height: calc(100% - 8px); align-items: stretch; }
+  .reveal .dos-split.s60 { grid-template-columns: 3fr 2fr; }
+  .reveal .dos-split.s50 { grid-template-columns: 1fr 1fr; }
+  .reveal .dos-code { margin: 0; }
+  .reveal .dos-code pre { font-size: 34px; line-height: 1.5; padding: 28px 36px; box-shadow: none; width: auto; max-height: none; }
+  .reveal .dos-code > .bar { font-size: 32px; padding: 0 10px 0 16px; }
+  .reveal .dos-code .dos-copy { font-size: 32px; }
+  .reveal pre code { max-height: none; }
+  .reveal .dos-term-body { font-size: 32px; max-height: 620px; }
+  .reveal .dos-term-bar, .reveal .dos-term-bar button { font-size: 32px; }
+
+  /* layouts */
+  .reveal .layout-title { display: flex !important; flex-direction: column; justify-content: center; }
+  .reveal .layout-title .kicker { font-family: var(--font-pixel); font-size: 32px; color: var(--accent); margin-bottom: 24px; }
+  .reveal .layout-title h1 { max-width: 15em; }
+  .reveal .layout-title .sub { font-size: 40px; color: var(--fg-read); max-width: 30em; }
+  .reveal .layout-title .who { margin-top: 56px; border-left: 8px solid var(--accent); padding-left: 32px; }
+  .reveal .layout-title .who b { display: block; font-family: var(--font-pixel); font-size: 48px; color: var(--fg-strong); }
+  .reveal .layout-title .who span { font-size: 32px; color: var(--fg-muted); }
+
+  .reveal .layout-dialog { display: flex !important; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(45deg, rgba(0,0,0,.18) 0 4px, transparent 4px 8px); }
+  .reveal .big-dialog { background: var(--dialog-bg); color: #000; box-shadow: 24px 24px 0 #000; max-width: 1500px; }
+  .reveal .big-dialog .inner { border: 6px double #000; margin: 16px; padding: 64px 64px 40px; position: relative; }
+  .reveal .big-dialog .t { position: absolute; top: 0; left: 50%; transform: translate(-50%, -60%); background: inherit; padding: 0 24px;
+    font-family: var(--font-pixel); font-weight: 700; font-size: 48px; white-space: nowrap; background: var(--dialog-bg); }
+  .reveal .big-dialog.danger { background: var(--danger-bg); color: #fff; }
+  .reveal .big-dialog.danger .inner { border-color: #fff; }
+  .reveal .big-dialog.danger .t { background: var(--danger-bg); }
+  .reveal .big-dialog p, .reveal .big-dialog li { color: inherit; max-width: none; }
+  .reveal .big-dialog strong { color: inherit; text-decoration: underline; }
+  .reveal .big-dialog ul > li::before { color: inherit; content: "×"; }
+  .reveal .big-dialog .btns { display: flex; justify-content: center; gap: 48px; margin-top: 32px; font-family: var(--font-pixel); font-size: 32px; }
+  .reveal .big-dialog .btns span { background: #fff; color: #000; padding: 0 16px; box-shadow: 10px 10px 0 #000; }
+
+  .reveal .layout-qr .qr-row { display: flex; gap: 96px; align-items: center; justify-content: center; height: 100%; }
+  .reveal .layout-qr dos-qr { --qr-size: 560px; }
+  .reveal .layout-qr .dos-qr-cap { font-size: 32px; }
+  .reveal .layout-qr .links p { font-size: 40px; }
+
+  .reveal .layout-poll dos-poll { margin-top: 24px; }
+  .reveal .layout-poll .dos-poll .q { font-size: 64px; margin-bottom: 48px; }
+  .reveal .layout-poll .dos-poll .row { grid-template-columns: 11em 1fr 7em; font-size: 40px; gap: 32px; margin-bottom: 28px; }
+  .reveal .layout-poll .dos-poll .bar { height: 56px; }
+  .reveal .layout-poll .dos-poll .meta { font-size: 32px; margin-top: 40px; }
+
+  .reveal .layout-timer { text-align: center; }
+  .reveal .layout-timer dos-timer { --timer-size: 192px; margin-top: 40px; }
+  .reveal .layout-timer .dos-timer .ctl { font-size: 32px; }
+
+  .reveal .layout-section { display: flex !important; align-items: center; justify-content: center; }
+  .reveal .copying { background: var(--dialog-bg); color: #000; box-shadow: 24px 24px 0 #000; min-width: 1200px; }
+  .reveal .copying .inner { border: 6px double #000; margin: 16px; padding: 64px 64px 48px; position: relative; }
+  .reveal .copying .t { position: absolute; top: 0; left: 50%; transform: translate(-50%, -60%); background: var(--dialog-bg); padding: 0 24px; font-family: var(--font-pixel); font-weight: 700; font-size: 32px; }
+  .reveal .copying h2 { color: #000; font-size: 64px; margin-bottom: 32px; }
+  .reveal .copying .dos-progress { font-size: 48px; color: #00006A; }
+  .reveal .copying .dos-progress .off { color: #8A8A8A; }
+  .reveal .copying p { color: #000; font-size: 32px; font-family: var(--font-pixel); margin: 24px 0 0; }
+
+  .reveal .dos-dodont { gap: 40px; }
+  .reveal .dos-do, .reveal .dos-dont { border-width: 6px; padding: 32px 40px; }
+  .reveal .dos-do > .h, .reveal .dos-dont > .h { font-size: 48px; }
+  .reveal .dos-do li, .reveal .dos-dont li { font-size: 36px; }
+
+  .reveal .dos-stats { gap: 40px; }
+  .reveal .dos-stat { border-width: 4px; padding: 32px 40px; }
+  .reveal .dos-stat b { font-size: 96px; }
+  .reveal .dos-stat span { font-size: 32px; }
+
+  .reveal .dos-ascii { font-size: 32px; line-height: 1; color: var(--fg); }
+  .reveal .flow { font-family: var(--font-pixel-mono); font-size: 32px; white-space: pre; line-height: 1.15; color: var(--fg); }
+  .reveal .flow .hl { color: var(--heading); }
+  .reveal .flow .ok { color: var(--ok); }
+  .reveal .flow .bad { color: var(--err); }
+
+  /* help overlay */
+  .stage-help { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 60; background: rgba(0,0,40,.6); }
+  .stage-help.on { display: flex; }
+  .stage-help .box { background: var(--dialog-bg); color: #000; box-shadow: 14px 14px 0 #000; font-family: var(--font-pixel); font-size: clamp(14px, 1.4vw, 28px); }
+  .stage-help .inner { border: 4px double #000; margin: 10px; padding: 1.6em 2em 1em; position: relative; }
+  .stage-help .t { position: absolute; top: 0; left: 50%; transform: translate(-50%, -60%); background: var(--dialog-bg); padding: 0 .6em; font-weight: 700; }
+  .stage-help table td { padding: 2px 14px; }
+  .stage-help table td:first-child { color: #00006A; font-weight: 700; white-space: nowrap; }
+
+  /* QR overlay */
+  .stage-qr { position: fixed; inset: 0; z-index: 55; display: none; align-items: center; justify-content: center; background: rgba(0,0,40,.75); }
+  .stage-qr.on { display: flex; }
+  .stage-qr dos-qr { --qr-size: min(56vh, 600px); }
+
+  /* reveal UI bits */
+  .reveal .controls { color: var(--accent); }
+  .reveal .progress { color: var(--accent); height: 6px; }
+  .reveal .slide-number { display: none; }
+  html.dos-present .reveal .controls { opacity: .4; }
+
+  /* print / PDF */
+  @media print {
+    .stage-chrome, .stage-help, .stage-qr { display: none !important; }
+  }
+}
+
+@layer kit.slides {
+  .reveal .dos-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .reveal .dos-qr-cap { font-size: 32px; }
+  .reveal .dos-code > .bar > span { font-size: 32px; }
+  .reveal .dos-term-hint { font-size: 32px; }
+}

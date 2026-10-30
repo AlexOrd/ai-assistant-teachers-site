@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="uk" data-theme="neon" data-accent="cyan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'">
+<title>Інструкція лектора — службова сторінка</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2306060c'/%3E%3Crect x='2' y='2' width='12' height='12' fill='none' stroke='%23FF3EC8' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../kit/css/kit.css?v=6be035a610">
+<link rel="stylesheet" href="../site.css?v=6be035a610">
+<style>
+  .verdict { font-size: var(--text-lg); line-height: 1.55; }
+  .tag { display: inline-block; font-family: var(--font-ui); font-size: .78em; padding: 0 .5em; border-radius: 5px; border: 1px solid; white-space: nowrap; }
+  .tag.now { color: #A6FF3A; border-color: rgba(166,255,58,.6); }
+  .tag.later { color: #A8B2D6; border-color: rgba(168,178,214,.5); }
+  .tag.must { color: #FF4D6D; border-color: rgba(255,77,109,.6); }
+  .s-ok { color: #A6FF3A; } .s-warn { color: #FFE14D; } .s-bad { color: #FF4D6D; }
+  .dos-table td:first-child { white-space: nowrap; }
+  details { border: 1px solid #262a44; border-radius: 10px; padding: 12px 18px; margin: 0 0 14px; background: rgba(11,12,24,.6); }
+  details > summary { cursor: pointer; font-weight: 600; color: #fff; }
+  details[open] > summary { margin-bottom: 10px; }
+  .time { font-family: var(--font-ui); color: #22E6FF; white-space: nowrap; }
+  .toc2 { columns: 2 18em; }
+  section.part { margin: 0 0 var(--s-6); }
+  .dos-step ul { margin-bottom: var(--s-2); }
+  .say { color: #E8ECFF; }
+  .key { display:inline-block; font-family: var(--font-ui); border:1px solid #3a3f63; border-radius:5px; padding:0 .45em; color:#22E6FF; }
+  .dos-table td { vertical-align: top; }
+  .big-q { font-size: var(--text-lg); color:#fff; }
+</style>
+</head>
+<body>
+<a class="dos-skip" href="#main">До змісту</a>
+<nav class="dos-menubar" aria-label="Меню">
+  <a class="brand" href="../"><u>Г</u>оловна</a>
+  <a href="../slides/"><u>С</u>лайди</a>
+  <a href="../guide/"><u>І</u>нструкція</a>
+  <a href="../code/"><u>К</u>од</a>
+  <span class="sp"></span>
+  <span class="muted">службова сторінка · без посилань</span>
+</nav>
+
+<main id="main" class="dos-page read">
+<header class="page-head">
+  <p class="kicker">СЛУЖБОВА СТОРІНКА · НЕ ДЛЯ УЧАСНИКІВ</p>
+  <h1>Інструкція лектора</h1>
+  <p>Майстер-клас «Хмарні сервіси в дії» · 30.10.2026, <b>14:15–14:45</b> (Київ) · Google Meet · 30 хвилин · формат: показ, учасники повторюють удома. Ця сторінка не має посилань з сайту і закрита від пошуковиків, але лежить у публічному репозиторії — тут немає жодних секретів.</p>
+</header>
+
+<section class="part" aria-labelledby="keys">
+<h2 id="keys">Клавіші слайдів</h2>
+<table class="dos-table"><tbody>
+<tr><td><span class="key">→</span> <span class="key">Пробіл</span></td><td>наступний слайд (основний шлях)</td></tr>
+<tr><td><span class="key">↓</span> <span class="key">↑</span></td><td>технічні деталі під слайдом (є позначка «↓ деталі»)</td></tr>
+<tr><td><span class="key">K</span></td><td>наступний крок у терміналі (слайд 17)</td></tr>
+<tr><td><span class="key">F</span></td><td>на весь екран</td></tr>
+<tr><td><span class="key">N</span></td><td>нотатки доповідача в окремому вікні</td></tr>
+<tr><td><span class="key">Q</span></td><td>QR каналу поверх будь-якого слайда (<span class="key">Esc</span> — сховати)</td></tr>
+<tr><td><span class="key">H</span></td><td>довідка по клавішах</td></tr>
+</tbody></table>
+<p class="muted">Демонструйте <b>вкладку</b> браузера, а не весь екран; нотатки — на другому моніторі або телефоні.</p>
+</section>
+
+<section class="part" aria-labelledby="flow">
+<h2 id="flow">Хід хвилина за хвилиною</h2>
+<table class="dos-table"><thead><tr><th>Час</th><th>Слайд</th><th>Що кажемо й робимо</th><th>Примітка</th></tr></thead><tbody>
+<tr><td class="time">0:00<br><span class="muted">14:15</span></td><td>1 Титул</td><td>Привітання, подяка організаторам.</td><td class="muted"></td></tr>
+<tr><td class="time">0:30<br><span class="muted">14:15</span></td><td>2 Мета</td><td>Три цілі: цілісна картина · кожен блок замінний · простий старт як база.</td><td class="muted"></td></tr>
+<tr><td class="time">1:10<br><span class="muted">14:16</span></td><td>3 План</td><td>5 етапів. «Технічні деталі — вниз ↓ і в інструкції».</td><td class="muted"></td></tr>
+<tr><td class="time">1:40<br><span class="muted">14:16</span></td><td>4 QR матеріалів</td><td>«Канал — там матеріали і спілкування після вебінару.»</td><td class="muted">Модератор: посилання на канал.</td></tr>
+<tr><td class="time">2:00<br><span class="muted">14:17</span></td><td>5 Розминка: KERNEL PANIC</td><td>1 хв, з гумором: розробку вже переписують (Google 75% коду), далі — інші галузі, і освіта серед них.</td><td class="muted">Цифри Google — слова CEO.</td></tr>
+<tr><td class="time">3:00<br><span class="muted">14:18</span></td><td>6 Цифри</td><td>88% користуються ШІ, з правилами — до 20%. 5,9 год/тиждень.</td><td class="muted"></td></tr>
+<tr><td class="time">2:40<br><span class="muted">14:17</span></td><td>Етап 1 · Бачення</td><td>—</td><td class="muted">5 с.</td></tr>
+<tr><td class="time">2:50<br><span class="muted">14:18</span></td><td>Повна картина</td><td>Code.gs у центрі, сервіси навколо.</td><td class="muted">↓ 6 сервісів — лише якщо питають.</td></tr>
+<tr><td class="time">4:00<br><span class="muted">14:19</span></td><td>Шлях повідомлення</td><td>Студент → Telegram → /exec → Таблиця → Gemini → відповідь.</td><td class="muted"></td></tr>
+<tr><td class="time">5:00<br><span class="muted">14:20</span></td><td>Кожен блок замінний</td><td>Головна думка: це схема, не «Telegram-бот». Інтерфейс, ШІ, знання, сервер — замінні.</td><td class="muted">↓ Telegram і правила закладу: НКЦК/РНБО, МОН — 40 с.</td></tr>
+<tr><td class="time">6:30<br><span class="muted">14:21</span></td><td>Навмисно просто</td><td>1 файл · 0 серверів · 0 ₴ · 40 хв. Свідомі компроміси — база для розвитку.</td><td class="muted"></td></tr>
+<tr><td class="time">7:20<br><span class="muted">14:22</span></td><td>Етап 2 · Безпека</td><td>—</td><td class="muted"></td></tr>
+<tr><td class="time">7:30<br><span class="muted">14:22</span></td><td>Що НЕ можна</td><td>«Усе йде на сервери Telegram і Google — жодних персональних даних; бот попереджає на /start.»</td><td class="muted">Обов’язкове речення.</td></tr>
+<tr><td class="time">8:40<br><span class="muted">14:24</span></td><td>Ключі не в коді</td><td>Ключі — лише у Властивостях скрипта.</td><td class="muted"></td></tr>
+<tr><td class="time">9:20<br><span class="muted">14:24</span></td><td>Етап 3 · Запуск</td><td>—</td><td class="muted"><b>Перед цим</b> змінити дедлайн ЛР3 у Таблиці.</td></tr>
+<tr><td class="time">9:30<br><span class="muted">14:24</span></td><td>7 кроків</td><td>Огляд кроків. За бажанням ↓ показати 2–3 кроки зі скринами (setup, Розгорнути, setWebhook).</td><td class="muted">↓ кроки 1–7, функції, помилки.</td></tr>
+<tr><td class="time">12:30<br><span class="muted">14:27</span></td><td>Оцей рядок</td><td>SYSTEM_PROMPT = характер бота під ваш предмет.</td><td class="muted">↓ код doPost, алгоритм, Gemini.</td></tr>
+<tr><td class="time">13:30<br><span class="muted">14:28</span></td><td>Знання — у Таблиці</td><td>Показати Таблицю зі зміненим дедлайном.</td><td class="muted"></td></tr>
+<tr><td class="time">14:20<br><span class="muted">14:29</span></td><td>Етап 4 · Демо</td><td>—</td><td class="muted"></td></tr>
+<tr><td class="time">14:30<br><span class="muted">14:29</span></td><td>Так бота бачить студент</td><td><b>Наживо</b>: «Коли дедлайн ЛР3?» → нова дата; «розв’яжи ЛР3 повністю» → підказка.</td><td class="muted">Не відповідає → розповідаю по скрину.</td></tr>
+<tr><td class="time">16:30<br><span class="muted">14:31</span></td><td>Спробуйте бота</td><td>@username вголос; «зараз або після вебінару».</td><td class="muted">Модератор: посилання на бота.</td></tr>
+<tr><td class="time">17:30<br><span class="muted">14:32</span></td><td>Етап 5 · Що далі</td><td>—</td><td class="muted"></td></tr>
+<tr><td class="time">17:40<br><span class="muted">14:33</span></td><td>Від простого до потужного</td><td>v1 → v2 → v3: кожен крок — один новий блок.</td><td class="muted"></td></tr>
+<tr><td class="time">18:40<br><span class="muted">14:34</span></td><td>Скільки коштує</td><td>1 група — безкоштовно; коледж ≈ $45/міс; на платному — дані не на навчання.</td><td class="muted"></td></tr>
+<tr><td class="time">19:40<br><span class="muted">14:35</span></td><td>Повторіть удома</td><td>20 с: «найчастіше питання студентів — у чат». QR інструкції.</td><td class="muted"></td></tr>
+<tr><td class="time">20:30<br><span class="muted">14:35</span></td><td>Канал</td><td>«Після вебінару — у каналі: скрин помилки, діліться ботами.»</td><td class="muted"></td></tr>
+<tr><td class="time">21:00<br><span class="muted">14:36</span></td><td>Питання?</td><td>Q&amp;A ~7 хв. Подякувати.</td><td class="muted"></td></tr>
+<tr><td class="time">29:30<br><span class="muted">14:45</span></td><td>—</td><td>Завершити вчасно.</td><td class="muted"></td></tr>
+</tbody></table>
+</section>
+
+<section class="part" aria-labelledby="inter">
+<h2 id="inter">Моменти взаємодії</h2>
+<ol>
+<li><b>Перед етапом «Запуск»</b> — тихо змінюю дедлайн ЛР3 у Таблиці.</li>
+<li><b>«Так бота бачить студент»</b> — живе демо в Telegram.</li>
+<li><b>«Спробуйте бота»</b> — хто хоче, пише боту зараз.</li>
+<li><b>«Повторіть удома»</b> — «найчастіше питання студентів» у чат.</li>
+<li><b>«Канал», «Питання?»</b> — обговорення, Q&amp;A.</li>
+</ol>
+</section>
+
+<section class="part" aria-labelledby="plan-b">
+<h2 id="plan-b">Якщо щось пішло не так</h2>
+<table class="dos-table"><thead><tr><th>Ситуація</th><th>Що роблю</th></tr></thead><tbody>
+<tr><td>Бот мовчить</td><td>Перевірити, що відкрито <code>/exec</code>; модератор кидає посилання на запасного бота; інакше — 60-секундне відео.</td></tr>
+<tr><td>«Дуже багато людей» (429)</td><td>«Ось чому в коді ліміт» — це частина уроку. Якщо масово: властивість <code>GEMINI_MODEL</code> → легша модель, далі за слайдами.</td></tr>
+<tr><td>Таблиця не відкривається</td><td>Бот бере запасну копію бази знань (6 год) — просто продовжую.</td></tr>
+<tr><td>Хтось написав персональні дані</td><td>Бот відмовить сам — показати як приклад.</td></tr>
+<tr><td>Відстаю від часу</td><td>Не йду вниз ↓ (деталі) і пропускаю «Цифри»; кроки 3 і 7 — одним реченням.</td></tr>
+<tr><td>Впав мій інтернет</td><td>Модератор пише в чат «секунду»; з телефона-точки доступу повертаюсь; слайди працюють з відкритої вкладки.</td></tr>
+</tbody></table>
+</section>
+
+<section class="part" aria-labelledby="after">
+<h2 id="after">Одразу після</h2>
+<ol>
+<li>В Apps Script запустити <code>postMaterials()</code> — допис з матеріалами й відгуком у канал.</li>
+<li>Подякувати організаторам; відповісти на питання в коментарях каналу.</li>
+<li>Через день — відгуки з форми; відповідати в каналі.</li>
+</ol>
+</section>
+</main>
+
+<footer class="dos-footer">
+  <span>Службова сторінка · інструкція лектора</span>
+  <span>Олександр Ординський</span>
+</footer>
+<script src="../kit/series.js?v=6be035a610"></script>
+<script src="../masterclass.js?v=6be035a610"></script>
+<script src="../kit/js/dos-kit.js?v=6be035a610"></script>
+</body>
+</html>

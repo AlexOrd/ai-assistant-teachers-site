@@ -1,0 +1,7 @@
+/* Stage entry stylesheet for reveal.js decks.
+   reveal's reset and core CSS go into the lowest layer, so the kit always wins over them. */
+@layer reveal, kit.tokens, kit.base, kit.components, kit.effects, kit.slides;
+@import url("../vendor/reveal/reset.css?v=6be035a610") layer(reveal);
+@import url("../vendor/reveal/reveal.css?v=6be035a610") layer(reveal);
+@import url("../css/kit.css?v=6be035a610");
+@import url("ordynski-dos.css?v=6be035a610");

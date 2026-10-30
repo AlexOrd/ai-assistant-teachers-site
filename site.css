@@ -1,0 +1,46 @@
+/* Masterclass-specific styles on top of the kit (unlayered, so they win over kit layers). */
+.hero { margin: var(--s-2) 0 var(--s-6); }
+.hero .kicker, .page-head .kicker { font-family: var(--font-ui, var(--font-pixel)); color: var(--accent); margin: 0 0 var(--s-2); font-size: var(--text-sm); letter-spacing: .14em; text-transform: uppercase; }
+.hero h1 { font-size: 48px; }
+@media (min-width: 800px) { .hero h1 { font-size: 64px; } }
+@media (min-width: 1700px) { .hero h1 { font-size: 96px; } }
+.hero .lead { font-size: var(--text-lg, 21px); line-height: 1.55; color: var(--fg-read); max-width: 46ch; }
+.shell { margin-bottom: var(--s-6); }
+.shell .dos-panel { min-height: 100%; }
+.preview h2 { font-size: var(--pixel-md); margin-bottom: var(--s-1); }
+.preview .meta { font-family: var(--font-ui, var(--font-pixel)); color: var(--fg-muted); font-size: var(--text-sm); }
+.preview .dos-code pre { font-size: 15px; }
+.next { margin-bottom: var(--s-4); }
+.author { font-size: 1.05em; }
+.is-soon { opacity: .55; cursor: not-allowed; text-decoration: none !important; }
+.is-soon::after { content: " (скоро)"; font-size: .85em; }
+.dos-btn.is-soon::after { content: " · скоро"; }
+[data-theme="commander"] .dos-btn.is-soon::after, [data-theme="stage"] .dos-btn.is-soon::after { content: " — скоро ]"; }
+.dos-fkeys .is-soon::after, .dos-filelist .is-soon::after { content: ""; }
+
+/* page skeleton for guide/code/slides pages */
+.page-head { margin: var(--s-2) 0 var(--s-4); }
+.toc { columns: 2 16em; margin-bottom: var(--s-4); }
+.toc li { break-inside: avoid; }
+.prereq { margin-bottom: var(--s-6); }
+.monitor-page { padding-top: var(--s-4); }
+.monitor-help { text-align: center; color: var(--fg); font-family: var(--font-ui, var(--font-pixel)); margin-top: var(--s-2); }
+.facts { margin-top: var(--s-2); }
+
+/* home: hero with a stats strip, footer and F-keys aligned with the content column */
+.hero-stats { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 190px)); gap: 12px; }
+.hero-stats span { white-space: nowrap; }
+.hero-stats li { margin: 0; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; background: rgba(11,12,24,.6); }
+.hero-stats li::before { content: none !important; }
+.hero-stats b { display: block; font-family: var(--font-pixel); font-size: 32px; color: var(--accent); line-height: 1.1; text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 45%, transparent); }
+.hero-stats span { font-family: var(--font-ui, var(--font-pixel)); font-size: var(--text-sm); color: var(--fg-muted); }
+.hero-stats li:nth-child(2) b { color: #FF3EC8; } .hero-stats li:nth-child(3) b { color: #A6FF3A; } .hero-stats li:nth-child(4) b { color: #FFE14D; }
+@media (max-width: 600px) { .hero-stats { display: none; } }
+.next-panel { display: flex; flex-direction: column; justify-content: center; }
+.next-grid { display: grid; grid-template-columns: auto 1fr; gap: var(--s-3); align-items: center; }
+.next-btns { display: flex; flex-wrap: wrap; gap: 10px; margin: var(--s-2) 0 0; }
+.next-btns .dos-btn { margin: 0; }
+@media (max-width: 600px) { .next-grid { grid-template-columns: 1fr; } .next-grid dos-qr { display: none; } }
+/* same column as .dos-page (neon: max-width clamp(1100px, 70vw, 1480px) + padding clamp(16px, 3vw, 48px)) */
+[data-theme="neon"] .dos-footer, [data-theme="neon"] .dos-fkeys { --col: clamp(1100px, 70vw, 1480px); padding-left: max(clamp(16px, 3vw, 48px), calc((100% - var(--col)) / 2 + clamp(16px, 3vw, 48px))); padding-right: max(clamp(16px, 3vw, 48px), calc((100% - var(--col)) / 2 + clamp(16px, 3vw, 48px))); }
+.dos-fkeys { justify-content: flex-start; }

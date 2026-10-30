@@ -1,0 +1,129 @@
+/* ordynski-dos-kit — design tokens (SPEC §3). Themes via data-theme on <html>,
+   accent via data-accent. Everything else in the kit reads only these variables. */
+
+:root {
+  /* CGA 16 */
+  --dos-black: #000000;      --dos-gray: #555555;
+  --dos-blue: #0000AA;       --dos-bright-blue: #5555FF;
+  --dos-green: #00AA00;      --dos-bright-green: #55FF55;
+  --dos-cyan: #00AAAA;       --dos-bright-cyan: #55FFFF;
+  --dos-red: #AA0000;        --dos-bright-red: #FF5555;
+  --dos-magenta: #AA00AA;    --dos-bright-magenta: #FF55FF;
+  --dos-brown: #AA5500;      --dos-yellow: #FFFF55;
+  --dos-light-gray: #AAAAAA; --dos-white: #FFFFFF;
+
+  /* fonts: two layers */
+  --font-pixel: "Ordynski Terminus Prop", "Ordynski Terminus", monospace;
+  --font-pixel-mono: "Ordynski Terminus", monospace;
+  --font-read: "Fira Code", ui-monospace, monospace;
+
+  /* accent (one CGA hue per masterclass) */
+  --accent: var(--dos-bright-cyan);
+  --accent-dim: var(--dos-cyan);
+  --accent-ink: #00104D;           /* text on accent */
+
+  /* semantic — commander (default) */
+  --bg: var(--dos-blue);
+  --bg-deep: #000080;
+  --panel: transparent;
+  --fg: var(--dos-bright-cyan);
+  --fg-read: #E6FBFF;
+  --fg-strong: var(--dos-white);
+  --fg-muted: var(--dos-cyan);
+  --heading: var(--dos-yellow);
+  --border: var(--accent);
+  --select-bg: var(--accent-dim);
+  --select-fg: var(--dos-black);
+  --bar-bg: var(--dos-cyan);
+  --bar-fg: var(--dos-black);
+  --bar-key-bg: var(--dos-black);
+  --bar-key-fg: var(--dos-white);
+  --hotkey: var(--dos-red);
+  --dialog-bg: var(--dos-light-gray);
+  --dialog-fg: var(--dos-black);
+  --danger-bg: var(--dos-red);
+  --danger-fg: var(--dos-white);
+  --code-bg: #05071F;
+  --code-fg: #D6DCEA;
+  --code-comment: var(--dos-light-gray);
+  --ok: var(--dos-bright-green);
+  --warn: var(--dos-yellow);
+  --err: var(--dos-bright-red);
+  --desktop: var(--dos-blue);
+  --shadow-hard: 10px 10px 0 rgba(0, 0, 0, .55);
+  --frame: 6px double var(--border);
+  --frame-thin: 2px solid var(--border);
+
+  /* sizes (guide pages; slides override in stage) */
+  --text-sm: 16px;
+  --text-md: 18px;
+  --text-lg: 24px;
+  --text-xl: 32px;
+  --text-hero: 48px;
+  --pixel-sm: 16px;   /* pixel font only at multiples of 16 */
+  --pixel-md: 32px;
+  --pixel-lg: 48px;
+  --lh-read: 1.6;
+  --s-1: 8px; --s-2: 16px; --s-3: 24px; --s-4: 32px; --s-6: 48px;
+  --measure: 68ch;
+}
+
+[data-accent="magenta"] { --accent: var(--dos-bright-magenta); --accent-dim: var(--dos-magenta); --accent-ink: #2A0030; }
+[data-accent="green"]   { --accent: var(--dos-bright-green);   --accent-dim: var(--dos-green);   --accent-ink: #002A00; }
+[data-accent="yellow"]  { --accent: var(--dos-yellow);         --accent-dim: var(--dos-brown);   --accent-ink: #2A2000; }
+
+/* stage — Neo-Commander for slides (SPEC §3.2a + consilium V4) */
+[data-theme="stage"] {
+  --bg: #0A1170;
+  --bg-grad: linear-gradient(180deg, #0E1880 0%, #0A1170 100%);
+  --panel: rgba(12, 24, 144, .55);
+  --fg: var(--dos-bright-cyan);
+  --fg-read: #E6FBFF;
+  --fg-muted: #9EE9FF;
+  --bar-bg: #04062A;
+  --bar-fg: #E6FBFF;
+  --bar-key-bg: transparent;
+  --bar-key-fg: var(--dos-yellow);
+  --hotkey: var(--dos-yellow);
+  --select-bg: var(--accent);
+  --select-fg: var(--accent-ink);
+  --frame: 4px double var(--border);
+  --shadow-hard: 12px 12px 0 rgba(0, 0, 0, .5);
+}
+
+/* terminal — code-heavy */
+[data-theme="terminal"] {
+  --bg: #000; --bg-deep: #000; --fg: var(--dos-light-gray); --fg-read: #E8E8E8;
+  --heading: var(--dos-bright-green); --border: var(--dos-gray);
+  --select-bg: var(--dos-green); --select-fg: #000;
+  --bar-bg: var(--dos-gray); --bar-fg: #000;
+}
+
+/* contrast — projectors, accessibility */
+[data-theme="contrast"] {
+  --bg: #000; --bg-deep: #000; --fg: #fff; --fg-read: #fff; --fg-muted: var(--dos-light-gray);
+  --heading: var(--dos-yellow); --border: #fff;
+  --select-bg: var(--dos-yellow); --select-fg: #000;
+  --bar-bg: #fff; --bar-fg: #000; --bar-key-fg: var(--dos-yellow);
+  --shadow-hard: none;
+}
+
+/* paper — print / PDF handouts */
+[data-theme="paper"] {
+  --bg: #D8D8D0; --bg-deep: #D8D8D0; --bg-grad: none; --panel: #E6E6E0;
+  --fg: #000; --fg-read: #000; --fg-strong: #000; --fg-muted: #333;
+  --heading: #00006A; --border: #00006A; --accent: #00006A; --accent-dim: #00006A; --accent-ink: #fff;
+  --select-bg: #00006A; --select-fg: #fff;
+  --bar-bg: #00006A; --bar-fg: #fff; --bar-key-bg: #000; --bar-key-fg: #fff;
+  --code-bg: #F2F2EC; --code-fg: #000; --code-comment: #444;
+  --ok: #006400; --warn: #7A5A00; --err: #A00000;
+  --shadow-hard: none;
+}
+@media print {
+  :root:not([data-theme="paper"]) {
+    --bg: #fff; --bg-deep: #fff; --bg-grad: none; --panel: #fff;
+    --fg: #000; --fg-read: #000; --fg-strong: #000; --heading: #00006A; --border: #00006A;
+    --code-bg: #F4F4F0; --code-fg: #000; --code-comment: #444; --shadow-hard: none;
+    --select-bg: #00006A; --select-fg: #fff; --bar-bg: #00006A; --bar-fg: #fff;
+  }
+}

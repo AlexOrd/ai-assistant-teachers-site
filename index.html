@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="uk" data-theme="neon" data-accent="cyan">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; font-src 'self'; frame-src 'self'">
+<title>Хмарні сервіси в дії — майстер-клас</title>
+<meta name="description" content="Майстер-клас для викладачів: безпечний ШІ-асистент на Google Apps Script, Gemini і Telegram. Слайди, покрокова інструкція, код.">
+<meta property="og:title" content="Хмарні сервіси в дії — ШІ-асистент викладача">
+<meta property="og:description" content="Слайди, покрокова інструкція й код Telegram-бота на Google Apps Script і Gemini.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230000AA'/%3E%3Crect x='2' y='2' width='12' height='12' fill='none' stroke='%2355FFFF' stroke-width='1.5'/%3E%3Crect x='5' y='6' width='6' height='2' fill='%23FFFF55'/%3E%3C/svg%3E">
+<link rel="preload" href="kit/fonts/terminus-prop-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="kit/fonts/fira-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="kit/css/kit.css?v=6be035a610">
+<link rel="stylesheet" href="site.css?v=6be035a610">
+<style>
+  .mobile-cta { display: none; }
+  @media (max-width: 600px) { .mobile-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; } .mobile-cta .dos-btn { text-align: center; padding: 14px; font-size: 1.05em; margin: 0; } }
+</style>
+</head>
+<body>
+<a class="dos-skip" href="#main">До змісту</a>
+<div class="dos-screen">
+  <nav class="dos-menubar" aria-label="Меню">
+    <a class="brand" href="./" aria-current="page"><u>Г</u>оловна</a>
+    <a href="slides/"><u>С</u>лайди</a>
+    <a href="guide/"><u>І</u>нструкція</a>
+    <a href="code/"><u>К</u>од</a>
+    <span class="sp"></span>
+    <a href="https://webinars.ordynski.com/" data-track="hub">← Усі вебінари</a>
+    <dos-clock></dos-clock>
+  </nav>
+
+  <main id="main" class="dos-page">
+    <header class="hero">
+      <p class="kicker">МАЙСТЕР-КЛАС · ДЛЯ ВИКЛАДАЧІВ · 30.10.2026</p>
+      <h1>Хмарні сервіси в дії</h1>
+      <p class="lead">Створення безпечного ШІ-асистента викладача на базі Google Workspace: Telegram-бот на Apps Script і Gemini — без серверів і без бюджету.</p>
+      <ul class="hero-stats" aria-label="Коротко">
+        <li><b>0 ₴</b><span>бюджет</span></li>
+        <li><b>0</b><span>серверів</span></li>
+        <li><b>1</b><span>файл коду</span></li>
+        <li><b>40 хв</b><span>повторити вдома</span></li>
+      </ul>
+      <p class="mobile-cta"><a class="dos-btn primary" data-mc="channel" target="_blank" rel="noopener">Підписатися на канал</a><a class="dos-btn" href="guide/">Інструкція →</a></p>
+    </header>
+
+    <div class="dos-split s60 joined shell">
+      <section class="dos-panel is-active" aria-label="Матеріали">
+        <span class="dos-panel-title">C:\MASTERCLASS</span>
+        <table class="dos-filelist" data-preview="#preview">
+          <thead><tr><th>Ім’я</th><th>Що це</th><th class="col-date">Розмір</th></tr></thead>
+          <tbody>
+            <tr data-href="slides/" data-preview-id="pv-slides" aria-selected="true"><td><a href="slides/"><span class="name">СЛАЙДИ</span> <span class="ext">.EXE</span></a></td><td class="label">Слайди</td><td class="col-date">27 + 19 ↓</td></tr>
+            <tr data-href="guide/" data-preview-id="pv-guide"><td><a href="guide/"><span class="name">ГАЙД</span> <span class="ext">.TXT</span></a></td><td class="label">Покрокова інструкція</td><td class="col-date">9 кроків</td></tr>
+            <tr data-href="code/" data-preview-id="pv-code"><td><a href="code/"><span class="name">CODE</span> <span class="ext">.GS</span></a></td><td class="label">Код бота</td><td class="col-date">1 файл</td></tr>
+            <tr data-href="#bot" data-preview-id="pv-bot"><td><a data-mc="bot" target="_blank" rel="noopener"><span class="name">БОТ</span> <span class="ext">.LNK</span></a></td><td class="label">Написати боту</td><td class="col-date">Telegram</td></tr>
+            <tr data-href="#channel" data-preview-id="pv-channel"><td><a data-mc="channel" target="_blank" rel="noopener"><span class="name">КАНАЛ</span> <span class="ext">.LNK</span></a></td><td class="label">Канал з матеріалами</td><td class="col-date">Telegram</td></tr>
+            <tr data-href="https://webinars.ordynski.com/" data-preview-id="pv-hub"><td><a href="https://webinars.ordynski.com/" data-track="hub"><span class="name">..</span> <span class="ext">НАЗАД</span></a></td><td class="label">Усі вебінари</td><td class="col-date">—</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="dos-panel" aria-label="Перегляд">
+        <span class="dos-panel-title">Перегляд</span>
+        <div id="preview" class="preview" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <div class="dos-split next">
+      <section class="dos-panel thin left-title next-panel" aria-label="Що далі">
+        <span class="dos-panel-title">Що далі</span>
+        <div class="next-grid">
+          <dos-qr data-mc-qr="channel" caption="Канал" size="168px"></dos-qr>
+          <div>
+            <p>Питання, обговорення й матеріали після вебінару — <b>у каналі</b>. Повторіть бота вдома за інструкцією.</p>
+            <p class="next-btns"><a class="dos-btn accent" data-mc="channel" target="_blank" rel="noopener">Канал</a><a class="dos-btn primary" href="guide/">Інструкція →</a><a class="dos-btn" href="https://webinars.ordynski.com/" data-track="hub">Усі вебінари</a></p>
+          </div>
+        </div>
+      </section>
+      <section class="dos-panel thin left-title" aria-label="Автор">
+        <span class="dos-panel-title">Автор</span>
+        <p class="author"><b>Олександр Ординський</b><br><span class="muted">Senior Full-Stack розробник · 10 років у розробці</span></p>
+        <ul class="facts">
+          <li><b>Senior Full-Stack розробник</b> у SysAid</li>
+          <li><b>10 років</b> комерційної розробки: стартапи, SaaS, фінансові застосунки</li>
+          <li>Викладач</li>
+        </ul>
+        <dos-socials></dos-socials>
+      </section>
+    </div>
+  </main>
+
+  <footer class="dos-footer">
+    <span>© 2026 Олександр Ординський · <a href="https://webinars.ordynski.com/" data-track="hub">Усі вебінари</a></span>
+    <span>Шрифти: Terminus, Fira Code (OFL) · Іконки: Pixelarticons (MIT)</span>
+  </footer>
+  <nav class="dos-fkeys" aria-label="Швидкі дії">
+    <a href="guide/" aria-keyshortcuts="F1"><i>1</i><span>Довідка</span></a>
+    <a href="slides/"><i>3</i><span>Слайди</span></a>
+    <a href="code/"><i>4</i><span>Код</span></a>
+    <a data-mc="bot" target="_blank" rel="noopener"><i>5</i><span>Бот</span></a>
+    <a data-mc="channel" target="_blank" rel="noopener"><i>9</i><span>Канал</span></a>
+    <a href="https://webinars.ordynski.com/" data-track="hub"><i>10</i><span>Вебінари</span></a>
+  </nav>
+</div>
+
+<template id="pv-slides">
+  <h2 class="no-rule">Слайди майстер-класу</h2>
+  <p class="meta">27 слайдів · 5 етапів · ще 19 з деталями (↓) · F — на весь екран</p>
+  <p>Як влаштований чат-бот, чому кожен блок замінний, безпека даних, запуск за 7 кроків і живе демо. Технічні деталі — у вертикальних слайдах.</p>
+  <p><a class="dos-btn primary" href="slides/">Відкрити</a><a class="dos-btn" href="slides/#/1">F — на весь екран</a></p>
+</template>
+<template id="pv-guide">
+  <h2 class="no-rule">Покрокова інструкція</h2>
+  <p class="meta">9 кроків · ≈ 40 хвилин · потрібен особистий Gmail і Telegram</p>
+  <p>Повторіть бота самостійно: від @BotFather до першої відповіді Gemini. Після кожного кроку — «Має вийти: …», наприкінці — таблиця типових помилок.</p>
+  <p><a class="dos-btn primary" href="guide/">Відкрити</a></p>
+</template>
+<template id="pv-code">
+  <h2 class="no-rule">Code.gs</h2>
+  <p class="meta">Один файл Google Apps Script · коментарі українською · без секретів у коді</p>
+  <div class="dos-code" data-file="Code.gs — фрагмент"><pre><code>function prop_(name) {
+  return PropertiesService
+    .getScriptProperties()
+    .getProperty(name);
+}</code></pre></div>
+  <p><a class="dos-btn primary" href="code/">Увесь код</a></p>
+</template>
+<template id="pv-bot">
+  <h2 class="no-rule">Написати боту</h2>
+  <p class="meta">Telegram · 5 повідомлень за 10 хвилин</p>
+  <p>Спитайте про демо-курс — «Коли дедлайн ЛР3?», надішліть шматок коду або <code>/rozklad середа</code>.</p>
+  <div class="dos-callout danger"><span class="title">Увага!</span>Не надсилайте персональні дані учнів і колег.</div>
+  <p><a class="dos-btn accent" data-mc="bot" target="_blank" rel="noopener">Відкрити бота</a></p>
+</template>
+<template id="pv-channel">
+  <h2 class="no-rule">Канал з матеріалами</h2>
+  <p class="meta">Telegram · коментарі відкриті</p>
+  <p>Слайди, інструкція, код і відповіді на питання після вебінару. Під кожним дописом можна поставити питання.</p>
+  <p><a class="dos-btn accent" data-mc="channel" target="_blank" rel="noopener">Підписатися</a></p>
+</template>
+<template id="pv-hub">
+  <h2 class="no-rule">Усі вебінари</h2>
+  <p class="meta">webinars.ordynski.com</p>
+  <p>Майбутні й минулі вебінари з матеріалами та записами.</p>
+  <p><a class="dos-btn primary" href="https://webinars.ordynski.com/" data-track="hub">Перейти</a></p>
+</template>
+
+<script src="kit/series.js?v=6be035a610"></script>
+<script src="masterclass.js?v=6be035a610"></script>
+<script src="kit/vendor/qrcode/qrcode.js?v=6be035a610"></script>
+<script src="kit/js/dos-kit.js?v=6be035a610"></script>
+<script src="site.js?v=6be035a610"></script>
+</body>
+</html>

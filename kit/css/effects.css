@@ -1,0 +1,11 @@
+/* ordynski-dos-kit — optional effects (SPEC §6.6). Off by default; never in present mode. */
+html.dos-crt body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 62%, rgba(0,0,0,.45) 100%);
+  animation: dos-flicker 6s steps(2) infinite;
+}
+@keyframes dos-flicker { 0%, 97% { opacity: 1; } 98% { opacity: .85; } }
+html.dos-present.dos-crt body::after, html.dos-print.dos-crt body::after { display: none; }
+.dos-dither { image-rendering: pixelated; filter: contrast(1.2) saturate(.9); }
